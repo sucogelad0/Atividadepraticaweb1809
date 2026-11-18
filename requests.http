@@ -1,0 +1,41 @@
+@baseUrl = http://localhost:3001
+# Execute individualmente. PATCH e DELETE alteram o registro #1.
+# Para recuperar as fixtures, npm run db:seed (apaga dados anteriores).
+
+### Health
+GET {{baseUrl}}/health
+
+### Listagem
+GET {{baseUrl}}/api/sessions?eventId=1&category=WORKSHOP
+
+### Ocupação
+GET {{baseUrl}}/api/events/1/occupancy
+
+### Criar inscrição
+POST {{baseUrl}}/api/registrations
+Content-Type: application/json
+
+{
+  "attendeeId": 1,
+  "sessionId": 3
+}
+
+### Alterar inscrição #1
+PATCH {{baseUrl}}/api/registrations/1
+Content-Type: application/json
+
+{
+  "sessionId": 6
+}
+
+### Cancelar inscrição #1
+DELETE {{baseUrl}}/api/registrations/1
+
+### Erro: sessão cancelada
+POST {{baseUrl}}/api/registrations
+Content-Type: application/json
+
+{
+  "attendeeId": 1,
+  "sessionId": 4
+}

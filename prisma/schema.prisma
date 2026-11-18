@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SessionCategory {
+  TALK
+  WORKSHOP
+  PANEL
+}
+
+enum SessionStatus {
+  SCHEDULED
+  CANCELLED
+  FINISHED
+}
+
+model Event {
+  id        Int       @id @default(autoincrement())
+  name      String
+  startDate DateTime
+  endDate   DateTime
+  sessions  Session[]
+}
+
+model Session {
+  id            Int             @id @default(autoincrement())
+  title         String
+  category      SessionCategory
+  status        SessionStatus   @default(SCHEDULED)
+  capacity      Int?
+  startAt       DateTime
+  endAt         DateTime
+  eventId       Int
+  event         Event           @relation(fields: [eventId], references: [id], onDelete: Restrict)
+  registrations Registration[]
+
+  @@index([eventId])
+}
+
+model Attendee {
+  id            Int            @id @default(autoincrement())
+  name          String
+  email         String         @unique
+  registrations Registration[]
+}
+
+model Registration {
+  id         Int      @id @default(autoincrement())
+  attendeeId Int
+  sessionId  Int
+  createdAt  DateTime @default(now())
+  attendee   Attendee @relation(fields: [attendeeId], references: [id], onDelete: Restrict)
+  session    Session  @relation(fields: [sessionId], references: [id], onDelete: Restrict)
+
+  @@index([sessionId])
+}

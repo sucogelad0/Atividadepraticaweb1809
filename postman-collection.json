@@ -1,0 +1,120 @@
+{
+  "info": {
+    "name": "EventPass | Atividade prática",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Exemplos de requisições. Execute individualmente; operações de escrita alteram os dados. Use o dia principal informado pelo seed."
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      },
+      "response": []
+    },
+    {
+      "name": "Listagem",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/sessions?eventId=1&category=WORKSHOP"
+      },
+      "response": []
+    },
+    {
+      "name": "Ocupação",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/events/1/occupancy"
+      },
+      "response": []
+    },
+    {
+      "name": "Criar inscrição",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/registrations",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"attendeeId\": 1,\n  \"sessionId\": 3\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Alterar inscrição #1",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/registrations/1",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"sessionId\": 6\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Cancelar inscrição #1",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/api/registrations/1"
+      },
+      "response": []
+    },
+    {
+      "name": "Erro: sessão cancelada",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/api/registrations",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"attendeeId\": 1,\n  \"sessionId\": 4\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    }
+  ]
+}
